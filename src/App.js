@@ -6,6 +6,8 @@ import Home from './pages/Home.js';
 import Footer from './components/Footer.js';
 import { Route, Switch, Link } from 'react-router-dom'
 import './App.css';
+import {Gofi} from "./utils/gofiAPI";
+import {paramsList} from "./actions";
 
 const About = () => (
     <div style={{"marginTop":"50px", "padding":"10px"}}>
@@ -22,6 +24,12 @@ const NoMatch = ({ location }) => (
 )
 
 class App extends Component {
+
+    componentWillMount() {
+        Gofi.getParams().then(data => {
+            this.props.store.dispatch(paramsList(data))
+        });
+    }
 
     render() {
     return (
@@ -51,7 +59,6 @@ class App extends Component {
     );
   }
 }
-
 
 
 export default App;

@@ -14,6 +14,29 @@ import {TextField} from "office-ui-fabric-react";
 import { Link } from 'react-router-dom'
 import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dialog';
 
+import {withToastManager} from "react-toast-notifications";
+import {Notifier, Notify} from "../components/Notify";
+
+
+
+class test extends React.Component {
+    addNotification = () =>{
+        const { toastManager } = this.props;
+        console.log(this.props)
+        toastManager.add(`Something went wrong`, {
+            appearance: 'error'
+        });
+    }
+    render() {
+        return (
+            <button onClick={() =>{this.addNotification()}}>test</button>
+        );
+    }
+};
+
+const Test = withToastManager(test);
+
+
 class Home extends React.Component {
   constructor() {
       super();
@@ -91,7 +114,7 @@ class Home extends React.Component {
                     iconName: 'Info'
                 },
                 iconOnly: true,
-                onClick: () => alert("Currently this feature has not been implemented")
+                onClick: () => window.location="about-us"
             }
         ];
     };
@@ -155,6 +178,8 @@ class Home extends React.Component {
             />
             <div className="ms-Grid" dir="ltr" >
             <br/>
+                <Notify/>
+                <button onClick={() =>{Notifier.createAlert("THS")}}>test</button>
             {
                 this.state.graphs.map(graph => {
                     return (

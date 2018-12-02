@@ -43,7 +43,10 @@ class Graph {
 
 class GofiAPI {
     constructor() {
-        this.baseurl = "http://192.168.0.125:8000"
+        this.baseurl = ""
+        if (process.env.NODE_ENV === 'development') {
+            this.baseurl = "http://localhost:8000"
+        }
     }
     processGraphs(g){
         if(Array.isArray(g)){
@@ -163,10 +166,6 @@ class GofiAPI {
             // returning the data here allows the caller to get it through another .then(...)
             return response.data
         })
-    }
-
-    getID(){
-        return "fc837f44-c866-420b-b786-d9dc54f24478"
     }
 
 }

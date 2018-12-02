@@ -19,9 +19,9 @@ const initialState = {}
 const enhancers = []
 const middleware = [thunk, routerMiddleware(history)]
 initializeIcons()
+
 if (process.env.NODE_ENV === 'development') {
     const devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__
-
     if (typeof devToolsExtension === 'function') {
         enhancers.push(devToolsExtension())
     }
@@ -41,7 +41,7 @@ const store = createStore(
 ReactDOM.render(
     <Provider store={store}>
         <ConnectedRouter history={history}>
-        <App />
+        <App store={store}/>
         </ConnectedRouter>
     </Provider>
     , document.getElementById('root'));

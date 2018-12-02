@@ -9,6 +9,7 @@ import {Notifier} from "../components/Notify";
 import EditModal from "../components/EditModal";
 import {addTodo, setModal, toggleModal} from "../actions";
 import connect from "react-redux/es/connect/connect";
+import {IconButton} from "office-ui-fabric-react";
 
 class Content extends React.Component {
   constructor(props) {
@@ -147,11 +148,12 @@ class Content extends React.Component {
 
       console.log()
     return (
-      <div className="container">
-          <Controls/>
-          <EditModal/>
+      <div className="container" ref="test" >
+          <Controls createNode={this.createNode} export={this.exportToggle}/>
+          <EditModal id={this.state.id}/>
           <ReactNodeGraph
               data={this.state}
+              graphid={this.state.id}
               grid={[1, 1]}
               onNodeMove={(nid, pos) => this.onNodeMove(nid, pos)}
               onNodeStartMove={nid => this.onNodeStartMove(nid)}
@@ -175,9 +177,8 @@ class Content extends React.Component {
                       "backgroundColor": "#337ab7",
                       "color": "white"
                   }}>
-
-                      <button style={{"float": "right", "margin": "12px"}} onClick={(e) => this.exportToggle()}>X</button>
-                      <h3>Hello World</h3>
+                      <h3>Graph Export</h3>
+                      <IconButton style={{"float": "right", "margin-top": "-45px"}} onClick={()=>{this.exportToggle()}} iconProps={{ iconName: 'ChromeClose' }} title="Close" ariaLabel="Close" />
                   </div>
                   <pre className="well" style={{
                       "width": "900px",
@@ -185,7 +186,13 @@ class Content extends React.Component {
                       "height": "500px",
                       "overflow": "auto",
                       "padding": "10px"
-                  }}><ReactJson displayDataTypes={false}  displayObjectSize={false}  enableClipboard={true} src={{"nodes": this.state.nodes, "connections": this.state.connections}} /></pre>
+                  }}>
+                      <ReactJson
+                          displayDataTypes={false}
+                          displayObjectSize={false}
+                          enableClipboard={true}
+                          src={{"nodes": this.state.nodes, "connections": this.state.connections}} />
+                  </pre>
               </div>
           }
       </div>

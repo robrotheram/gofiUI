@@ -38,17 +38,18 @@ class EditModal extends React.Component {
 
         console.log("MODE", this.props.editNode.mode, this.props.editNode.id);
         if(this.props.editNode.mode === "CREATE") {
-            Gofi.createNode(Gofi.getID(), model).then(data => {
-                    console.log(data)
+            Gofi.createNode(this.props.id, model).then(data => {
+                Notifier.createAlert("Node Created", "success")
                     _that.props.toggleModal();
                 }
             ).catch(error => {
-                Notifier.createAlert(error.message)
+                console.log(error.response)
+                Notifier.createAlert(error.response.data)
                 _that.props.toggleModal();
             })
         }else if(this.props.editNode.mode === "EDIT") {
             console.log("MODE", this.props.editNode.mode, this.props.editNode.id);
-            Gofi.editNode(Gofi.getID(), model, this.props.editNode.id).then(data => {
+            Gofi.editNode(this.props.id, model, this.props.editNode.id).then(data => {
                 Notifier.createAlert("Node Edited", "success")
                     _that.props.toggleModal();
                 }

@@ -77,6 +77,10 @@ export default class index extends React.Component {
 
   calculateHeight(nodes){
     let h =  Math.max.apply(Math, nodes.map(function(o) { return o.meta.y; }))+250;
+    if(h === -Infinity)
+    {
+      return "100%"
+    }
     return h+"px"
   }
 
@@ -180,22 +184,24 @@ export default class index extends React.Component {
 
     if (dragging) {
 
-      let sourceNode = this.getNodebyId(nodes, this.state.source[0]);
-      let connectorStart = computeOutOffsetByIndex(
-        sourceNode.meta.x,
-        sourceNode.meta.y,
-        3
-        //sourceNode.list.length
-      );
-      const { svgComponent: { refs: { svg } } } = this.refs;
-      const svgRect = svg.getBoundingClientRect();
-      let connectorEnd = { x: this.state.mousePos.x, y: this.state.mousePos.y - svgRect.top };
-
-        console.log()
-      newConnector = <Spline start={connectorStart} end={connectorEnd} />;
+        let sourceNode = this.getNodebyId(nodes, this.state.source[0]);
+        let connectorStart = computeOutOffsetByIndex(
+            sourceNode.meta.x,
+            sourceNode.meta.y,
+            3
+            //sourceNode.list.length
+        );
+        const {svgComponent: {refs: {svg}}} = this.refs;
+        const svgRect = svg.getBoundingClientRect();
+        let connectorEnd = {x: this.state.mousePos.x, y: this.state.mousePos.y};
+        if (svgRect.top < 0) {
+            connectorEnd = {x: this.state.mousePos.x, y: this.state.mousePos.y - svgRect.top +15};
+        }
+        newConnector = <Spline start={connectorStart} end={connectorEnd} />;
     }
 
     let splineIndex = 0;
+
     return (
       <div id="test" className={dragging ? "dragging" : ""}>
         {nodes.map((node, i) => {
@@ -208,6 +214,7 @@ export default class index extends React.Component {
              // inputs={node.fields.in}
              // outputs={node.fields.out}
               meta={node.params}
+              graphid={this.props.graphid}
               status={node.status}
               grid={grid}
               pos={{ x: node.meta.x, y: node.meta.y }}

@@ -1,88 +1,38 @@
 import React from 'react';
-import { MessageBar, MessageBarType, } from 'office-ui-fabric-react';
-import Countdown from "./Countdown";
+import {ToastProvider, withToastManager } from 'react-toast-notifications';
 
-class n {
+class notifier {
     constructor(){
-        this.alerts = {}
-        this.cb = []
+        this.cb = {}
     }
-
-    uniqueId() {
-        return Math.random().toString(36).substr(2, 16);
-    };
-    register(alert) {
-        this.cb.push(alert)
-    }
-
-    callback(){
-        this.cb.forEach(function(cb) {
-            cb()
-        });
-
+    register(cb) {
+        this.cb = cb;
     }
     createAlert(message, type) {
-        var _type;
-        switch(type) {
-            case "error":
-                _type = MessageBarType.error
-                break;
-            case "warning":
-                _type = MessageBarType.warning
-                break;
-            case "success":
-                _type = MessageBarType.success
-                break;
-            default:
-                _type = MessageBarType.severeWarning
+        if (type === undefined) {
+            type = "error"
         }
-        let _id = this.uniqueId()
-        this.alerts[_id] = {"id":_id, "msg":message, type: _type};
-        this.callback()
-    }
-    getAlerts(){
-        console.log(this.alerts);
-        return Object.values(this.alerts)
-    }
-
-    deleteAlert(id){
-        delete this.alerts[id];
-        this.callback()
+        this.cb(message,{ appearance: type, autoDismiss: true })
     }
 }
 
-let Notifier = new n()
-class Notify extends React.Component {
-
-    constructor(){
-        super();
-        this.state = {
-            alerts: []
-        };
-        Notifier.register(() => this.setState({"alerts": Notifier.getAlerts()}))
+let Provider = withToastManager(class extends React.Component {
+    componentDidMount() {
+            Notifier.register(this.props.toastManager.add)
     }
     render() {
-        return (
-            <div className="alertsPanel">
-                {Notifier.getAlerts().map(alert => {
-                    return <MessageBar
-                    messageBarType={alert.type}
-                    isMultiline={false}
-                    onDismiss={() => Notifier.deleteAlert(alert.id)}
-                    dismissButtonAriaLabel="Close"
-                    actions={
-                    <div>
-                        <Countdown  timeleft={10} onStop={() => Notifier.deleteAlert(alert.id)}/>
-                    </div>
-                }
-                >
-                    {alert.msg}
-                    </MessageBar>
-                })}
+        return null
+    }
+});
 
-            </div>
+class Notify extends React.Component {
+    render() {
+        return (
+                <ToastProvider>
+                    <Provider/>
+                </ToastProvider>
         );
     }
 }
-
+let Notifier = new notifier()
 export { Notifier, Notify }

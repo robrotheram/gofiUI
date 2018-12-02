@@ -3,13 +3,17 @@ import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar';
 import {Notify} from './Notify'
 
 import "../status.css"
+import connect from "react-redux/es/connect/connect";
+import PropTypes from 'prop-types'; // You need to add this dependency
 
 class Controls extends React.Component {
+
     static contextTypes = {
-        router: () => true, // replace with PropTypes.object if you use them
+        router: PropTypes.object
     }
 
     getItems = () => {
+        console.log(this.props)
         return [
             {
                 key: 'backitem',
@@ -29,7 +33,16 @@ class Controls extends React.Component {
                 },
                 ariaLabel: 'New. Use left and right arrow keys to navigate',
                 subMenuProps: {
-                    items: []
+                    items: this.props.list.map(prop => {
+                        return {
+                            key: prop.type,
+                            name: "New " + prop.type.toLowerCase() + " node",
+                            iconProps: {
+                                iconName: 'PageAdd'
+                            },
+                            onClick: (e) => this.props.createNode(e, prop)
+                        }
+                    })
 
                 }
             },
@@ -77,7 +90,7 @@ class Controls extends React.Component {
 
     render() {
         return (
-            <div className="controls" style={{"zIndex":"999"}}>
+            <div className="controls">
                 <CommandBar
                     items={this.getItems()}
                     farItems={this.getFarItems()}
@@ -88,6 +101,15 @@ class Controls extends React.Component {
         );
     }
 }
-export default Controls;
+
+const mapStateToProps = state => ({
+    list: state.editNode.list
+});
+
+
+export default connect(
+    mapStateToProps
+)(Controls);
+
 
 

@@ -55,7 +55,8 @@ class Node extends React.Component {
         selected: false,
         status: "",
         nid: props.nid,
-        showModal: false
+        showModal: false,
+        graphid: props.graphid
 
     };
   }
@@ -69,7 +70,7 @@ class Node extends React.Component {
   }
   componentDidMount() {
       this.getStatus();
-      this.interval = setInterval(() => {this.getStatus()}, 8000);
+      this.interval = setInterval(() => {this.getStatus()}, 1000);
   }
 
   componentWillUnmount() {
@@ -124,6 +125,7 @@ class Node extends React.Component {
       if(this.state.status.status!=="ACTIVE"){
           Gofi.startProcess(this.props.nid).then(data =>{
               Notifier.createAlert("Node: "+this.props.title+" has been started", "success")
+
           });
       }else{
           Gofi.stopProcess(this.props.nid).then(data =>{
@@ -133,7 +135,8 @@ class Node extends React.Component {
     }
 
     delete(){
-          Gofi.deleteNode(Gofi.getID(), this.props.nid).then(data =>{
+
+          Gofi.deleteNode(this.state.graphid, this.props.nid).then(data =>{
               Notifier.createAlert("Node: "+this.props.title+" has been Deleted", "success")
           });
 
