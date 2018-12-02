@@ -17,26 +17,6 @@ import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dia
 import {withToastManager} from "react-toast-notifications";
 import {Notifier, Notify} from "../components/Notify";
 
-
-
-class test extends React.Component {
-    addNotification = () =>{
-        const { toastManager } = this.props;
-        console.log(this.props)
-        toastManager.add(`Something went wrong`, {
-            appearance: 'error'
-        });
-    }
-    render() {
-        return (
-            <button onClick={() =>{this.addNotification()}}>test</button>
-        );
-    }
-};
-
-const Test = withToastManager(test);
-
-
 class Home extends React.Component {
   constructor() {
       super();
@@ -132,11 +112,13 @@ class Home extends React.Component {
         }
         if(this.state.type === "CREATE") {
             Gofi.createGraph(graph).then(data => {
+                Notifier.createAlert("Graph has been created", "success")
                 this.setState({ graphs: [...this.state.graphs, data] });
                 this.toggleModal();
             })
         } else if(this.state.type === "EDIT"){
             Gofi.editGraph(this.state.params.id, graph).then(data => {
+                ifier.createAlert("Graph has been edited", "success")
                 this.toggleModal();
             })
         }
@@ -164,6 +146,7 @@ class Home extends React.Component {
     _DeleteDialog = () => {
         Gofi.deleteGraph(this.state.id).then( data => {
                 this.setState({hideDialog: true})
+                Notifier.createAlert("Graph has been deleted", "success")
             }
         )
     };
