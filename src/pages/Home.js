@@ -118,7 +118,7 @@ class Home extends React.Component {
             })
         } else if(this.state.type === "EDIT"){
             Gofi.editGraph(this.state.params.id, graph).then(data => {
-                ifier.createAlert("Graph has been edited", "success")
+                Notifier.createAlert("Graph has been edited", "success")
                 this.toggleModal();
             })
         }
