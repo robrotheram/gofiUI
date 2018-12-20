@@ -88,6 +88,15 @@ class Home extends React.Component {
                 onClick: () => alert("Currently this feature has not been implemented")
             },
             {
+                key: 'flow',
+                name: 'Flow',
+                iconProps: {
+                    iconName: 'flow'
+                },
+                iconOnly: true,
+                onClick: () => window.location="admin"
+            },
+            {
                 key: 'info',
                 name: 'Info',
                 iconProps: {
@@ -162,7 +171,6 @@ class Home extends React.Component {
             <div className="ms-Grid" dir="ltr" >
             <br/>
                 <Notify/>
-                <button onClick={() =>{Notifier.createAlert("THS")}}>test</button>
             {
                 this.state.graphs.map(graph => {
                     return (

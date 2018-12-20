@@ -74,7 +74,7 @@ class Controls extends React.Component {
                     iconName: 'Tiles'
                 },
                 iconOnly: true,
-                onClick: () => alert("Currently this feature has not been implemented")
+                onClick: () => this.props.view()
             },
             {
                 key: 'info',

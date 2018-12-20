@@ -11,6 +11,8 @@ import {addTodo, setModal, toggleModal} from "../actions";
 import connect from "react-redux/es/connect/connect";
 import {IconButton} from "office-ui-fabric-react";
 
+import GraphList from "../components/GraphList"
+
 class Content extends React.Component {
   constructor(props) {
       super(props);
@@ -18,6 +20,7 @@ class Content extends React.Component {
           nodes: [],
           connections:[],
           toggle: false,
+          viewtoggle: false,
           paramsList: [],
           model: [],
           type:{},
@@ -25,6 +28,7 @@ class Content extends React.Component {
       };
       this.createNode = this.createNode.bind(this);
       this.exportToggle = this.exportToggle.bind(this);
+      this.viewToggle = this.viewToggle.bind(this);
   }
 
     componentWillUnmount() {
@@ -35,10 +39,10 @@ class Content extends React.Component {
   getGraph(){
       Gofi.getGraph(this.state.id).then(
           graph => {
-              console.log(graph)
+
               if(this.state.nodes.length !== graph.nodes.length || this.state.connections.length !== graph.connections.length){
                   this.setState(graph)
-                  console.log(graph)
+                 // console.log(graph)
               }
           }
       );
@@ -116,6 +120,9 @@ class Content extends React.Component {
     exportToggle(){
         this.setState({toggle: !this.state.toggle})
     }
+    viewToggle(){
+        this.setState({viewtoggle: !this.state.viewtoggle})
+    }
 
     createNode(e, prop) {
         this.props.setModal(prop.type, prop.params, {}, "CREATE");
@@ -149,23 +156,36 @@ class Content extends React.Component {
       console.log()
     return (
       <div className="container" ref="test" >
-          <Controls createNode={this.createNode} export={this.exportToggle}/>
+          <Controls createNode={this.createNode} export={this.exportToggle} view={this.viewToggle}/>
           <EditModal id={this.state.id}/>
-          <ReactNodeGraph
-              data={this.state}
-              graphid={this.state.id}
-              grid={[1, 1]}
-              onNodeMove={(nid, pos) => this.onNodeMove(nid, pos)}
-              onNodeStartMove={nid => this.onNodeStartMove(nid)}
-              onNewConnector={(n1, o, n2, i) => this.onNewConnector(n1, o, n2, i)}
-              onRemoveConnector={connector => this.onRemoveConnector(connector)}
-              onNodeSelect={nid => {
-                  this.handleNodeSelect(nid);
-              }}
-              onNodeDeselect={nid => {
-                  this.handleNodeDeselect(nid);
-              }}
-          />
+
+          <div>
+              {this.state.viewtoggle ? (
+                  <GraphList data={this.state} graphid={this.state.id}/>
+              ) : (
+                  <ReactNodeGraph
+                      data={this.state}
+                      graphid={this.state.id}
+                      grid={[1, 1]}
+                      onNodeMove={(nid, pos) => this.onNodeMove(nid, pos)}
+                      onNodeStartMove={nid => this.onNodeStartMove(nid)}
+                      onNewConnector={(n1, o, n2, i) => this.onNewConnector(n1, o, n2, i)}
+                      onRemoveConnector={connector => this.onRemoveConnector(connector)}
+                      onNodeSelect={nid => {
+                          this.handleNodeSelect(nid);
+                      }}
+                      onNodeDeselect={nid => {
+                          this.handleNodeDeselect(nid);
+                      }}
+                  />
+              )}
+          </div>
+
+
+
+
+
+
 
           { this.state.toggle &&
               <div style={{"position": "absolute", "top": "120px", "zIndex": "999999", "width": "100%"}}>

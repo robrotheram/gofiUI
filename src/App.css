@@ -50,7 +50,7 @@ header and footer components.
 .App .header,
 .App .footer {
   height: 4em;
-  z-index: 0;
+  z-index: 1;
 }
 
 .body .container {
@@ -247,6 +247,17 @@ body {
 
 }
 
+.adminCard {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 10px;
+  height: auto;
+  display: block;
+}
+
+.adminCard > .ms-DocumentCardTitle {
+  height: auto;
+}
 
 @keyframes dash {
   to {
@@ -418,6 +429,7 @@ body {
   border-collapse: collapse;
   border-spacing: 0;
   font: normal 13px Arial, sans-serif;
+  table-layout: fixed
 }
 .zui-table tbody td {
   border: solid 1px #DDEEEE;

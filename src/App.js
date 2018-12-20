@@ -3,6 +3,7 @@ import {Fabric} from 'office-ui-fabric-react/lib/Fabric';
 import NavBar from './components/NavBar.js';
 import Content from './pages/Content.js';
 import Home from './pages/Home.js';
+import Admin from './pages/Admin.js';
 import Footer from './components/Footer.js';
 import { Route, Switch, Link } from 'react-router-dom'
 import './App.css';
@@ -43,6 +44,7 @@ class App extends Component {
                         <Switch>
                         <Route default exact path="/" component={Home} />
                         <Route exact path="/about-us" component={About} />
+                        <Route exact path="/admin" component={Admin} />
                         <Route exact path="/graph/:id" component={Content} />
                         <Route component={NoMatch} />
                     </Switch>

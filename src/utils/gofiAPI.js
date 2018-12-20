@@ -139,6 +139,12 @@ class GofiAPI {
         })
     }
 
+    startProcess(id){
+        return axios.get(this.baseurl+"/pipeline/"+id+"/start").then(response => {
+            // returning the data here allows the caller to get it through another .then(...)
+            return response.data
+        })
+    }
 
     startProcess(id){
         return axios.get(this.baseurl+"/pipeline/"+id+"/start").then(response => {
@@ -164,6 +170,12 @@ class GofiAPI {
     getParams(){
         return axios.get(this.baseurl+"/pipeline/params").then(response => {
             // returning the data here allows the caller to get it through another .then(...)
+            return response.data
+        })
+    }
+
+    getHealth(){
+        return axios.get(this.baseurl+"/controller/health").then(response => {
             return response.data
         })
     }
