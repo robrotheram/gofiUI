@@ -9,7 +9,10 @@ import { connectRouter, routerMiddleware } from 'connected-react-router'
 import { initializeIcons } from '@uifabric/icons';
 import rootReducer from './reducers'
 import registerServiceWorker from './registerServiceWorker';
-import { ConnectedRouter } from 'connected-react-router'
+
+import { HashRouter } from 'react-router-dom'
+
+
 import createHistory from 'history/createBrowserHistory'
 import thunk from 'redux-thunk'
 
@@ -40,9 +43,9 @@ const store = createStore(
 
 ReactDOM.render(
     <Provider store={store}>
-        <ConnectedRouter history={history}>
+        <HashRouter>
         <App store={store}/>
-        </ConnectedRouter>
+        </HashRouter>
     </Provider>
     , document.getElementById('root'));
 registerServiceWorker();

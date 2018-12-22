@@ -28,9 +28,11 @@ let Provider = withToastManager(class extends React.Component {
 class Notify extends React.Component {
     render() {
         return (
+            <div style={{"zIndex":"10"}}>
                 <ToastProvider>
                     <Provider/>
                 </ToastProvider>
+            </div>
         );
     }
 }

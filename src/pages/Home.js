@@ -94,7 +94,7 @@ class Home extends React.Component {
                     iconName: 'flow'
                 },
                 iconOnly: true,
-                onClick: () => window.location="admin"
+                onClick: () => window.location="#/admin"
             },
             {
                 key: 'info',
@@ -103,7 +103,7 @@ class Home extends React.Component {
                     iconName: 'Info'
                 },
                 iconOnly: true,
-                onClick: () => window.location="about-us"
+                onClick: () => window.location="#/about-us"
             }
         ];
     };

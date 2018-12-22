@@ -37,7 +37,6 @@ class App extends Component {
             <Fabric className="App">
                 <div className="header">
                     <NavBar />
-
                 </div>
                 <div className="body">
                     <div className="content">

@@ -50,7 +50,7 @@ header and footer components.
 .App .header,
 .App .footer {
   height: 4em;
-  z-index: 1;
+  z-index: 0;
 }
 
 .body .container {
@@ -248,15 +248,16 @@ body {
 }
 
 .adminCard {
-  width: 100%;
-  max-width: 100%;
-  margin-bottom: 10px;
-  height: auto;
-  display: block;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-bottom: 10px !important;
+  height: auto !important;
+  display: block !important;
+  z-index: 0 !important;
 }
 
 .adminCard > .ms-DocumentCardTitle {
-  height: auto;
+  height: auto !important;
 }
 
 @keyframes dash {
