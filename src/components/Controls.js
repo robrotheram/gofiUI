@@ -47,44 +47,75 @@ class Controls extends React.Component {
                 }
             },
             {
-                key: 'export',
-                name: 'Export',
+                key: 'view',
+                name: 'View',
                 iconProps: {
-                    iconName: 'Download'
+                    iconName: 'Tiles'
                 },
-                onClick: () => this.props.export()
-            }
+                subMenuProps: {
+                    items: [
+                        {
+                            key: 'nview',
+                            name: 'Graph View',
+                            iconProps: {
+                                iconName: 'GitGraph'
+                            },
+                            onClick: () => this.props.view(false)
+                        },
+                        {
+                            key: 'gview',
+                            name: 'List View',
+                            iconProps: {
+                                iconName: 'ViewList'
+                            },
+                            onClick: () => this.props.view(true)
+                        }
+                    ]
+                }
+            },
+            {
+                key: 'contorls',
+                name: 'Controls',
+                iconProps: {
+                    iconName: 'Settings'
+                },
+                subMenuProps: {
+                    items: [
+                        {
+                            key: "export",
+                            name: "View Json",
+                            iconProps: {
+                                iconName: 'Download'
+                            },
+                            onClick: () => this.props.export()
+                        },
+                        {
+                            key: "start",
+                            name: "Start all nodes",
+                            iconProps: {
+                                iconName: 'Play'
+                            },
+                            onClick: () => this.props.start()
+                        },
+                        {
+                            key: "stop",
+                            name: "Stop all nodes",
+                            iconProps: {
+                                iconName: 'Stop'
+                            },
+                            onClick: () => this.props.stop()
+                        }
+
+                    ]
+                }
+            },
+
         ];
     };
 
     getFarItems = () => {
         return [
-            {
-                key: 'sort',
-                name: 'Sort',
-                iconProps: {
-                    iconName: 'SortLines'
-                },
-                onClick: () => alert("Currently this feature has not been implemented")
-            },
-            {
-                key: 'tile',
-                name: 'Grid view',
-                iconProps: {
-                    iconName: 'Tiles'
-                },
-                iconOnly: true,
-                onClick: () => this.props.view()
-            },
-            {
-                key: 'info',
-                name: 'Info',
-                iconProps: {
-                    iconName: 'Info'
-                },
-                iconOnly: true,
-                onClick: () => alert("Currently this feature has not been implemented")
-            }
+
         ];
     };
 

@@ -29,6 +29,8 @@ class Content extends React.Component {
       this.createNode = this.createNode.bind(this);
       this.exportToggle = this.exportToggle.bind(this);
       this.viewToggle = this.viewToggle.bind(this);
+      this.startAllNodes = this.startAllNodes.bind(this);
+      this.stopAllNodes = this.stopAllNodes.bind(this);
   }
 
     componentWillUnmount() {
@@ -120,8 +122,12 @@ class Content extends React.Component {
     exportToggle(){
         this.setState({toggle: !this.state.toggle})
     }
-    viewToggle(){
-        this.setState({viewtoggle: !this.state.viewtoggle})
+    viewToggle(toggle){
+        if (toggle === undefined) {
+            this.setState({viewtoggle: !this.state.viewtoggle})
+            return
+        }
+        this.setState({viewtoggle: toggle})
     }
 
     createNode(e, prop) {
@@ -145,8 +151,29 @@ class Content extends React.Component {
     addTODO(){
         console.log(this.props)
         this.props.toggleModal();
+  }
 
-
+    startAllNodes(){
+        var i;
+        var prom = []
+        for (i = 0; i < this.state.nodes.length; i++) {
+            let node = this.state.nodes[i];
+            prom.push(Gofi.startProcess(node.id))
+        }
+        Promise.all(prom).then(function (data) {
+            Notifier.createAlert("All nodes have been started", "success")
+        })
+    }
+    stopAllNodes(){
+        var i;
+        var prom = []
+        for (i = 0; i < this.state.nodes.length; i++) {
+            let node = this.state.nodes[i];
+            prom.push(Gofi.stopProcess(node.id))
+        }
+        Promise.all(prom).then(function (data) {
+            Notifier.createAlert("All nodes have been stopped", "success")
+        })
     }
 
 
@@ -156,7 +183,13 @@ class Content extends React.Component {
       console.log()
     return (
       <div className="container" ref="test" >
-          <Controls createNode={this.createNode} export={this.exportToggle} view={this.viewToggle}/>
+          <Controls
+              createNode={this.createNode}
+              export={this.exportToggle}
+              view={this.viewToggle}
+              start={this.startAllNodes}
+              stop={this.stopAllNodes}
+          />
           <EditModal id={this.state.id}/>
 
           <div>
