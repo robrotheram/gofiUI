@@ -39,7 +39,7 @@ class AdminCard extends React.Component {
                 name: 'id',
                 fieldName: 'id',
                 minWidth: 100,
-                maxWidth: 250,
+                maxWidth: 200,
                 data: 'string',
                 isPadded: true
             },
@@ -87,10 +87,13 @@ class AdminCard extends React.Component {
             },
 
         ];
+        var title = ((item.is_leader) ? 'Leader: '+ item.worker : 'Worker: '+ item.worker);
+        var classname = ((item.is_leader) ? "adminCard leaderCard" : "adminCard");
+
         return (
-            <DocumentCard type={DocumentCardType.compact} className="adminCard">
-                <DocumentCardTitle className="adminCardTitle"
-                    title={"Worker: "+ item.worker}
+            <DocumentCard type={DocumentCardType.compact} className={classname}>
+                <DocumentCardTitle
+                    title={title}
                     shouldTruncate={true}
                 />
                 <DocumentCardTitle
@@ -167,6 +170,7 @@ class Admin extends React.Component {
   componentDidMount() {
       Gofi.getHealth().then(
           health => {
+              console.log(health)
              this.setState({health:health})
           }
       )
@@ -189,11 +193,13 @@ class Admin extends React.Component {
   render() {
     return (
         <div style={{"marginTop":"55px"}}>
+            <div style={{"position":"fixed", "left":"0px", "right":"0px", "zIndex":"1"}}>
             <CommandBar
                 items={this.getItems()}
                 ariaLabel={'Use left and right arrow keys to navigate between commands'}
             />
-            <div style={{"marginTop":"10px", "padding":"10px"}}>
+            </div>
+            <div style={{"marginTop":"10px", "padding":"70px 20px"}}>
             {Object.keys(this.state.health).map((key, i) => {
                 return (<AdminCard data={this.state.health[key]}/>)})}
             </div>

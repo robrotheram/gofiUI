@@ -173,6 +173,7 @@ body {
   top: 0px;
   left: 0px;
   right: 0px;
+  z-index: 1;
 }
 
 .App .footer {
@@ -258,6 +259,10 @@ body {
 
 .adminCard > .ms-DocumentCardTitle {
   height: auto !important;
+}
+
+.leaderCard {
+  border: 3px solid #3cb87e !important;
 }
 
 @keyframes dash {
@@ -456,4 +461,11 @@ body {
   font-size: 20px;
   z-index: 9999999;
   margin-bottom: 20px;
+}
+
+.leader{
+  background-color: #3d3d3d !important;
+}
+.notleader{
+  background-color: #555555 !important;
 }

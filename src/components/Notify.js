@@ -1,6 +1,15 @@
 import React from 'react';
 import {ToastProvider, withToastManager } from 'react-toast-notifications';
 
+
+
+const MyCustomToast = ({ appearance, children }) => (
+    <div style={{"zIndex":"99999"}}>
+        {children}
+    </div>
+);
+
+
 class notifier {
     constructor(){
         this.cb = {}
@@ -21,7 +30,7 @@ let Provider = withToastManager(class extends React.Component {
             Notifier.register(this.props.toastManager.add)
     }
     render() {
-        return null
+        return <div style={{"zIndex":"10"}}></div>
     }
 });
 
