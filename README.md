@@ -1,6 +1,6 @@
 #GofiUI
 
-Flow based ui for the gofi backend api. Currently extremely experimental.
+Flow based ui for the gofi backend api (https://github.com/robrotheram/gofi). Currently extremely experimental.
 
 ### Libaries used
 - react
